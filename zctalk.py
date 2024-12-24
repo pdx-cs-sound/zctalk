@@ -3,9 +3,9 @@
 
 import argparse, sys
 import numpy as np
-import sounddevice as sd
 import scipy.io.wavfile as wave
 import scipy.signal as ss
+import sounddevice as sd
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-w", "--wavout")

@@ -2,9 +2,12 @@ import argparse, sys
 import numpy as np
 import sounddevice as sd
 import scipy.io.wavfile as wave
+import scipy.signal as ss
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-w", "--wavout")
+ap.add_argument("--lowpass", type=float)
+ap.add_argument("--highpass", type=float)
 ap.add_argument("wavfile")
 args = ap.parse_args()
 
@@ -21,10 +24,17 @@ elif data.ndim > 2:
     exit(1)
 assert data.ndim == 1
 
-zc = np.sign(data)
-for i in range(len(zc)):
-    if zc[i] == 0.0:
-        zc[i] = 1.0
+if args.lowpass:
+    crit = args.lowpass * 2 / rate
+    filt = ss.cheby2(16, 60, crit, output='sos')
+    data = ss.sosfilt(filt, data)
+
+if args.highpass:
+    crit = args.highpass * 2 / rate
+    filt = ss.cheby2(16, 60, crit, btype='highpass', output='sos')
+    data = ss.sosfilt(filt, data)
+
+zc = (data >= 0.0).astype(np.float32) - 0.5
 
 if args.wavout:
     wave.write(args.wavout, rate, zc)

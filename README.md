@@ -17,3 +17,8 @@ Castle Wolfenstein. It sounds better in German.
 There are several parameters that can be played with to
 perhaps slightly improve the quality: see the code for
 details.
+
+## License
+
+This work is made available under the "MIT License". See the
+file `LICENSE.txt` in this distribution for license terms.

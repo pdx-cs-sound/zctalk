@@ -1,3 +1,6 @@
+# zero-crossing sound stuff
+# Bart Massey 2024
+
 import argparse, sys
 import numpy as np
 import sounddevice as sd
